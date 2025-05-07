@@ -2,6 +2,7 @@ import bcrypt from 'bcryptjs';
 import { Request, Response, Router } from 'express';
 import jwt from 'jsonwebtoken';
 import { Usuario } from '../models/Usuario';
+import { gerarToken } from '../services/gerarToken';
 import { notificarNovoUsuario } from '../services/notificador';
 
 const router = Router();
@@ -28,8 +29,8 @@ router.post('/login', async (req: Request, res: Response) => {
     res.status(401).json({ error: 'Credenciais inválidas' });
   }
 
-  const accessToken = jwt.sign({ userId: usuario!._id }, 'secreto', { expiresIn: '15m' });
-  const refreshToken = jwt.sign({ userId: usuario!._id }, 'secreto', { expiresIn: '7d' });
+  const accessToken = gerarToken(usuario!._id as string, '15m');
+  const refreshToken = gerarToken(usuario!._id as string, '7d');
 
   res.cookie('refreshToken', refreshToken, {
     httpOnly: true,
@@ -50,9 +51,9 @@ router.post('/refresh-token', async (req, res) => {
   }
   
   try {
-    const payload = jwt.verify(token, 'secreto') as { userId: string };
+    const payload = jwt.verify(token, 'secreto') as { usuario_id: string };
 
-    const accessToken = jwt.sign({ userId: payload.userId }, 'secreto', { expiresIn: '15m' });
+    const accessToken = gerarToken(payload!.usuario_id as string, '15m');
 
     res.json({ token: accessToken });
   } catch {

@@ -1,4 +1,3 @@
-// src/services/taskNotifier.ts
 import { ITarefa } from '../models/Tarefa';
 import { IUsuario, Usuario } from '../models/Usuario';
 import { enviarEmail } from './email';
