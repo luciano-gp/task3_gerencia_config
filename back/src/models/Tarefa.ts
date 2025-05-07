@@ -9,7 +9,7 @@ export interface ITarefa extends Document {
   usuario: Types.ObjectId;
 }
 
-export interface TarefaFiltro {
+export interface ITarefaFiltro {
   usuario: string;
   situacao?: string;
   data_prevista?: {

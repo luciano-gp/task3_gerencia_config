@@ -1,10 +1,12 @@
 import { Router } from 'express';
 import { auth, AuthRequest } from '../middleware/auth';
-import { Tarefa, TarefaFiltro } from '../models/Tarefa';
+import { ITarefaFiltro, Tarefa } from '../models/Tarefa';
+import { notificarTarefa } from '../services/notificador';
+import { gerarRelatorioDeTarefas } from '../services/relatorio';
 
 const router = Router();
 
-// Buscar tarefa
+// Buscar
 router.get('/tarefas/:id', auth, async (req: AuthRequest, res) => {
   const tarefa = await Tarefa.findOne({ _id: req.params.id, usuario: req.usuario_id });
 
@@ -16,11 +18,11 @@ router.get('/tarefas/:id', auth, async (req: AuthRequest, res) => {
   res.json(tarefa);
 });
 
-// Listar tarefas
+// Listar
 router.get('/tarefas', auth, async (req: AuthRequest, res) => {
   const { situacao, data_inicio, data_fim, page = '1', limit = '10' } = req.query;
 
-  const filtro: TarefaFiltro = { usuario: req.usuario_id! };
+  const filtro: ITarefaFiltro = { usuario: req.usuario_id! };
 
   if (situacao) filtro.situacao = situacao as string;
 
@@ -50,7 +52,7 @@ router.get('/tarefas', auth, async (req: AuthRequest, res) => {
   });
 });
 
-// Criar tarefa
+// Criar
 router.post('/tarefas', auth, async (req: AuthRequest, res) => {
   const { descricao, data_prevista } = req.body;
   const tarefa = new Tarefa({
@@ -59,10 +61,13 @@ router.post('/tarefas', auth, async (req: AuthRequest, res) => {
     usuario: req.usuario_id,
   });
   await tarefa.save();
+
+  notificarTarefa('criada', tarefa);
+
   res.status(201).json(tarefa);
 });
 
-// Atualizar completamente tarefa
+// Editar
 router.put('/tarefas/:id', auth, async (req: AuthRequest, res) => {
   const { descricao, data_prevista, data_encerramento, situacao } = req.body;
 
@@ -77,10 +82,12 @@ router.put('/tarefas/:id', auth, async (req: AuthRequest, res) => {
     return;
   }
 
+  notificarTarefa('atualizada', tarefa);
+
   res.json(tarefa);
 });
 
-// Atualizar parcialmente tarefa
+// Atualizar
 router.patch('/tarefas/:id', auth, async (req: AuthRequest, res) => {
   const camposPermitidos = ['descricao', 'data_prevista', 'data_encerramento', 'situacao'];
   const atualizacoes: any = {};
@@ -100,10 +107,12 @@ router.patch('/tarefas/:id', auth, async (req: AuthRequest, res) => {
     return;
   }
 
+  notificarTarefa('atualizada', tarefa);
+
   res.json(tarefa);
 });
 
-// Deletar tarefa
+// Deletar
 router.delete('/tarefas/:id', auth, async (req: AuthRequest, res) => {
   const tarefa = await Tarefa.findOneAndDelete({ _id: req.params.id, usuario: req.usuario_id });
 
@@ -113,6 +122,16 @@ router.delete('/tarefas/:id', auth, async (req: AuthRequest, res) => {
   }
 
   res.json({ mensagem: 'Tarefa removida com sucesso' });
+});
+
+// Relatório
+router.get('/tarefas/relatorio/pdf', auth, async (req: AuthRequest, res) => {
+  try {
+    await gerarRelatorioDeTarefas(req.usuario_id!, res);
+  } catch (err) {
+    console.error('Erro ao gerar relatório:', err);
+    res.status(500).json({ error: 'Erro ao gerar relatório' });
+  }
 });
 
 export default router;

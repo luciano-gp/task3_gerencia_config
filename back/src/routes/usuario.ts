@@ -2,6 +2,7 @@ import bcrypt from 'bcryptjs';
 import { Request, Response, Router } from 'express';
 import jwt from 'jsonwebtoken';
 import { Usuario } from '../models/Usuario';
+import { notificarNovoUsuario } from '../services/notificador';
 
 const router = Router();
 
@@ -12,6 +13,8 @@ router.post('/usuarios', async (req, res) => {
 
   const usuario = new Usuario({ nome, email, senha: senhaHash });
   await usuario.save();
+
+  notificarNovoUsuario(usuario);
 
   res.status(201).json(usuario);
 });
