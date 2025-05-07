@@ -28,8 +28,36 @@ router.post('/login', async (req: Request, res: Response) => {
     res.status(401).json({ error: 'Credenciais inválidas' });
   }
 
-  const token = jwt.sign({ usuario_id: usuario!._id }, 'secreto', { expiresIn: '1d' });
-  res.json({ token });
+  const accessToken = jwt.sign({ userId: usuario!._id }, 'secreto', { expiresIn: '15m' });
+  const refreshToken = jwt.sign({ userId: usuario!._id }, 'secreto', { expiresIn: '7d' });
+
+  res.cookie('refreshToken', refreshToken, {
+    httpOnly: true,
+    sameSite: 'strict',
+    maxAge: 7 * 86400000
+  });
+
+  res.json({ accessToken });
+});
+
+// Refresh Token
+router.post('/refresh-token', async (req, res) => {
+  const token = req.cookies.refreshToken;
+
+  if (!token) {
+    res.status(401).json({ error: 'Refresh token ausente' });
+    return;
+  }
+  
+  try {
+    const payload = jwt.verify(token, 'secreto') as { userId: string };
+
+    const accessToken = jwt.sign({ userId: payload.userId }, 'secreto', { expiresIn: '15m' });
+
+    res.json({ token: accessToken });
+  } catch {
+    res.status(403).json({ error: 'Refresh token inválido ou expirado' });
+  }
 });
 
 export default router;

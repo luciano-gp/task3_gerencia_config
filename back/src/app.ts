@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 import express from 'express';
 import mongoose from 'mongoose';
 
+import cookieParser from 'cookie-parser';
 import tarefaRoutes from './routes/tarefa';
 import usuarioRoutes from './routes/usuario';
 
@@ -10,6 +11,7 @@ dotenv.config();
 const app = express();
 
 app.use(express.json());
+app.use(cookieParser());
 
 app.use(tarefaRoutes);
 app.use(usuarioRoutes);
