@@ -14,8 +14,8 @@ export const auth = (req: AuthRequest, res: Response, next: NextFunction) => {
   }
 
   try {
-    const decoded = jwt.verify(token, 'secreto') as { usuario_id: string };
-    req.usuario_id = decoded.usuario_id;
+    const decoded = jwt.verify(token, 'secreto') as { userId: string };
+    req.usuario_id = decoded.userId;
     next();
   } catch {
     res.status(401).json({ error: 'Token inválido' });
