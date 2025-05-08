@@ -4,6 +4,7 @@ services:
     container_name: mongo_tarefas
     ports:
       - "27017:27017"
+    restart: always
     volumes:
       - mongodb_data:/data/db
     networks:
