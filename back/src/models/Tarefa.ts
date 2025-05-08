@@ -1,16 +1,18 @@
 import { Document, Schema, Types, model } from 'mongoose';
 
 export interface ITarefa extends Document {
+  titulo: string;
   descricao: string;
   data_criacao: Date;
   data_prevista: Date;
   data_encerramento?: Date;
-  situacao: 'pendente' | 'em_andamento' | 'concluida' | 'cancelada';
+  situacao: 'pendente' | 'em_andamento' | 'concluida';
   usuario: Types.ObjectId;
 }
 
 export interface ITarefaFiltro {
   usuario: string;
+  titulo?: RegExp;
   situacao?: string;
   data_prevista?: {
     $gte?: Date;
@@ -19,13 +21,14 @@ export interface ITarefaFiltro {
 }
 
 const TarefaSchema = new Schema<ITarefa>({
-  descricao: { type: String, required: true },
+  titulo: { type: String, required: true },
+  descricao: { type: String },
   data_criacao: { type: Date, default: Date.now },
   data_prevista: { type: Date, required: true },
   data_encerramento: { type: Date },
   situacao: {
     type: String,
-    enum: ['pendente', 'em_andamento', 'concluida', 'cancelada'],
+    enum: ['pendente', 'em_andamento', 'concluida'],
     default: 'pendente',
   },
   usuario: {

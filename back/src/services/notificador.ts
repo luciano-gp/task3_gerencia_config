@@ -17,7 +17,8 @@ export const notificarTarefa = async (
 
   const conteudo = `
     <p>Olá, ${usuario.nome || 'usuário'}!</p>
-    <p>A tarefa <strong>${tarefa.descricao}</strong> foi ${tipo}.</p>
+    <p>A tarefa <strong>${tarefa.titulo}</strong> foi ${tipo}.</p>
+    <p><strong>Descrição:</strong> ${tarefa.descricao}</p>
     <p><strong>Situação:</strong> ${tarefa.situacao}</p>
     <p><strong>Data prevista:</strong> ${new Date(
       tarefa.data_prevista

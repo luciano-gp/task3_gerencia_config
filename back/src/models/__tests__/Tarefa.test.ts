@@ -4,18 +4,18 @@ import { Tarefa } from "../../models/Tarefa";
 describe("Tarefa model", () => {
   const usuarioId = new Types.ObjectId();
 
-  it("deve exigir a descrição ao criar tarefa", () => {
+  it("deve exigir o titulo ao criar tarefa", () => {
     const tarefa = new Tarefa({ data_prevista: new Date(), usuario: usuarioId });
     const erro = tarefa.validateSync();
 
-    expect(erro?.errors?.descricao?.message).toBe(
-      "Path `descricao` is required."
+    expect(erro?.errors?.titulo?.message).toBe(
+      "Path `titulo` is required."
     );
   });
 
   it("deve exigir a data_prevista ao criar tarefa", () => {
     const tarefa = new Tarefa({
-      descricao: "Teste Unitário",
+      titulo: "Teste Unitário",
       usuario: usuarioId,
     });
     const erro = tarefa.validateSync();
@@ -25,21 +25,9 @@ describe("Tarefa model", () => {
     );
   });
 
-  it('deve aceitar situação de tarefa "cancelada"', () => {
+  it('deve aceitar situação de tarefa "concluida"', () => {
     const tarefa = new Tarefa({
-      descricao: "Teste",
-      data_prevista: new Date(),
-      situacao: "cancelada",
-      usuario: usuarioId,
-    });
-
-    const erro = tarefa.validateSync();
-    expect(erro).toBeUndefined();
-  });
-
-  it('deve aceitar situação de tarefa "coincluida"', () => {
-    const tarefa = new Tarefa({
-      descricao: "Teste",
+      titulo: "Teste",
       data_prevista: new Date(),
       situacao: "concluida",
       usuario: usuarioId,
@@ -51,7 +39,7 @@ describe("Tarefa model", () => {
 
   it('deve aceitar situação de tarefa "em_andamento"', () => {
     const tarefa = new Tarefa({
-      descricao: "Teste",
+      titulo: "Teste",
       data_prevista: new Date(),
       situacao: "em_andamento",
       usuario: usuarioId,
@@ -63,7 +51,7 @@ describe("Tarefa model", () => {
 
   it('deve aceitar situação de tarefa "pendente"', () => {
     const tarefa = new Tarefa({
-      descricao: "Teste",
+      titulo: "Teste",
       data_prevista: new Date(),
       situacao: "pendente",
       usuario: usuarioId,
@@ -75,7 +63,7 @@ describe("Tarefa model", () => {
 
   it('deve recusar situação de tarefa "inválida"', () => {
     const tarefa = new Tarefa({
-      descricao: "Teste",
+      titulo: "Teste",
       data_prevista: new Date(),
       situacao: "invalida",
       usuario: usuarioId,

@@ -14,7 +14,7 @@ const mockUsuario = {
 const mockTarefa = {
   _id: "t123",
   usuario: "u123",
-  descricao: "Fazer teste unitário",
+  titulo: "Fazer teste unitário",
   situacao: "pendente",
   data_prevista: new Date("2025-05-10"),
 } as any;

@@ -8,7 +8,7 @@ jest.mock('../../models/Tarefa');
 describe('gerarRelatorioDeTarefas', () => {
   const mockTarefas = [
     {
-      descricao: 'Tarefa 1',
+      titulo: 'Tarefa 1',
       situacao: 'pendente',
       data_prevista: new Date('2025-05-10'),
       data_criacao: new Date('2025-05-01'),

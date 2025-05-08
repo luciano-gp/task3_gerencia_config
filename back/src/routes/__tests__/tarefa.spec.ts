@@ -1,11 +1,11 @@
 import {
-    atualizarHandler,
-    buscarHandler,
-    criarHandler,
-    deletarHandler,
-    editarHandler,
-    listarHandler,
-    relatorioHandler,
+  atualizarHandler,
+  buscarHandler,
+  criarHandler,
+  deletarHandler,
+  editarHandler,
+  listarHandler,
+  relatorioHandler,
 } from "../../handlers/tarefa";
 // import { Tarefa } from "../../models/Tarefa";
 import { notificarTarefa } from "../../services/notificador";
@@ -33,7 +33,7 @@ describe("handlers de tarefa", () => {
       params: { id: "tarefa123" },
       usuario_id: "user123",
     };
-    const tarefaFake = { _id: "tarefa123", descricao: "desc" };
+    const tarefaFake = { _id: "tarefa123", titulo: "desc" };
     jest.spyOn(Tarefa, "findOne").mockResolvedValue(tarefaFake as any);
     await buscarHandler(mockReq, mockRes);
     expect(mockRes.json).toHaveBeenCalledWith(tarefaFake);
@@ -68,7 +68,7 @@ describe("handlers de tarefa", () => {
 
   it("criarHandler deve criar uma nova tarefa e notificar", async () => {
     const mockReq: any = {
-      body: { descricao: "Nova tarefa", data_prevista: new Date() },
+      body: { titulo: "Nova tarefa", data_prevista: new Date() },
       usuario_id: "user123",
     };
   
@@ -86,14 +86,14 @@ describe("handlers de tarefa", () => {
     const mockReq: any = {
       params: { id: "id1" },
       usuario_id: "user1",
-      body: { descricao: "editada" },
+      body: { titulo: "editada" },
     };
     jest
       .spyOn(Tarefa, "findOneAndUpdate")
-      .mockResolvedValue({ descricao: "editada" } as any);
+      .mockResolvedValue({ titulo: "editada" } as any);
     await editarHandler(mockReq, mockRes);
     expect(mockRes.json).toHaveBeenCalledWith(
-      expect.objectContaining({ descricao: "editada" })
+      expect.objectContaining({ titulo: "editada" })
     );
     expect(notificarTarefa).toHaveBeenCalled();
   });
@@ -112,14 +112,14 @@ describe("handlers de tarefa", () => {
     const mockReq: any = {
       params: { id: "id1" },
       usuario_id: "user1",
-      body: { descricao: "Atualizada", situacao: "concluida" },
+      body: { titulo: "Atualizada", situacao: "concluida" },
     };
     jest
       .spyOn(Tarefa, "findOneAndUpdate")
-      .mockResolvedValue({ descricao: "Atualizada" } as any);
+      .mockResolvedValue({ titulo: "Atualizada" } as any);
     await atualizarHandler(mockReq, mockRes);
     expect(mockRes.json).toHaveBeenCalledWith(
-      expect.objectContaining({ descricao: "Atualizada" })
+      expect.objectContaining({ titulo: "Atualizada" })
     );
     expect(notificarTarefa).toHaveBeenCalled();
   });

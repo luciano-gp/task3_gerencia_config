@@ -21,6 +21,7 @@ export const gerarRelatorioDeTarefas = async (
   tarefas.forEach((tarefa, i) => {
     doc
       .fontSize(12)
+      .text(`Título: ${tarefa.titulo}`, { underline: true })
       .text(`${i + 1}. ${tarefa.descricao}`)
       .text(`Situação: ${tarefa.situacao}`)
       .text(`Data prevista: ${new Date(tarefa.data_prevista).toLocaleDateString()}`)
