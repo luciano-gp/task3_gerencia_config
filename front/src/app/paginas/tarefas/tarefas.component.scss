@@ -9,6 +9,12 @@
   gap: 16px;
 }
 
+.cabecalho {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .filtros {
   display: flex;
   gap: 16px;
@@ -20,4 +26,11 @@
   align-items: center;
   gap: 1rem;
   margin-top: 1rem;
+}
+
+.modal-conteudo {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 8px;
 }

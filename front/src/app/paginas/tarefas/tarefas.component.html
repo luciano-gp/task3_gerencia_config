@@ -1,7 +1,7 @@
 <div class="container">
   <div class="cabecalho">
     <h1>Tarefas</h1>
-    <!-- <button mat-flat-button color="primary" (click)="abrirModalCriarTarefa()">Criar Tarefa</button> -->
+    <button mat-flat-button color="primary" (click)="abrirModalCriarTarefa()">Criar Tarefa</button>
   </div>
   <div class="filtros">
     <mat-form-field appearance="fill">
@@ -42,6 +42,9 @@
       <app-card-tarefa
         [tarefa]="tarefa"
         (concluir)="concluirTarefa(tarefa._id)"
+        (iniciar)="iniciarTarefa(tarefa._id)"
+        (reabrir)="reabrirTarefa(tarefa._id)"
+        (pausar)="pausarTarefa(tarefa._id)"
         (editar)="editarTarefa(tarefa._id)"
         (excluir)="excluirTarefa(tarefa._id)"
       ></app-card-tarefa>
@@ -67,5 +70,32 @@
   <mat-dialog-actions align="end">
     <button mat-button (click)="dialog.close()">Cancelar</button>
     <button mat-flat-button (click)="confirmarExclusao()">Excluir</button>
+  </mat-dialog-actions>
+</ng-template>
+
+<ng-template #modalTarefaTemplate let-dialog>
+  <h2 mat-dialog-title>{{ tarefaSelecionada ? 'Editar Tarefa' : 'Criar Tarefa' }}</h2>
+  <mat-dialog-content class="modal-conteudo">
+    <mat-form-field appearance="fill">
+      <mat-label>Título</mat-label>
+      <input matInput [(ngModel)]="tarefaForm.titulo" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Descrição</mat-label>
+      <textarea matInput rows="3" [(ngModel)]="tarefaForm.descricao"></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Data Prevista</mat-label>
+      <input matInput [matDatepicker]="pickerData" [(ngModel)]="tarefaForm.data_prevista" />
+      <mat-datepicker-toggle matSuffix [for]="pickerData"></mat-datepicker-toggle>
+      <mat-datepicker #pickerData></mat-datepicker>
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button (click)="dialog.close()">Cancelar</button>
+    <button mat-flat-button color="primary" (click)="salvarTarefa()">Salvar</button>
   </mat-dialog-actions>
 </ng-template>

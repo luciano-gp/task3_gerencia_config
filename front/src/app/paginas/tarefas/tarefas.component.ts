@@ -7,6 +7,7 @@ import {
   ViewChild,
 } from '@angular/core';
 
+import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -27,6 +28,12 @@ import { CardTarefaComponent } from '../../componentes/card-tarefa/card-tarefa.c
 import { ITarefa, ITarefaResponse } from '../../interfaces/ITarefa';
 import { TarefasService } from '../../servicos/tarefas.service';
 
+interface ITarefaForm {
+  titulo: string;
+  descricao?: string;
+  data_prevista: Date;
+}
+
 @Component({
   selector: 'app-tarefas',
   standalone: true,
@@ -44,6 +51,7 @@ import { TarefasService } from '../../servicos/tarefas.service';
     MatDatepickerModule,
     MatNativeDateModule,
     MatInputModule,
+    FormsModule
   ],
   templateUrl: './tarefas.component.html',
   styleUrl: './tarefas.component.scss',
@@ -55,6 +63,13 @@ export class TarefasComponent {
   protected tarefas = signal<ITarefaResponse | null>(null);
   protected carregando = signal(true);
   pagina = signal(1);
+
+  @ViewChild('modalTarefaTemplate') modalTarefaTemplate!: TemplateRef<any>;
+  protected tarefaForm: ITarefaForm = {
+    titulo: '',
+    descricao: '',
+    data_prevista: new Date(),
+  };
 
   @ViewChild('confirmarExclusaoTemplate')
   confirmarExclusaoTemplate!: TemplateRef<any>;
@@ -104,6 +119,16 @@ export class TarefasComponent {
   protected ordenarTarefas(campo: string) {
     this.ordenacao = campo;
     this.listarTarefas();
+  }
+
+  protected abrirModalCriarTarefa() {
+    this.tarefaSelecionada = null;
+    this.tarefaForm = {
+      titulo: '',
+      descricao: '',
+      data_prevista: new Date(),
+    };
+    this.dialogRef = this.dialog.open(this.modalTarefaTemplate);
   }
 
   protected listarTarefas() {
@@ -168,9 +193,72 @@ export class TarefasComponent {
       });
   }
 
+  protected iniciarTarefa(id: string) {
+    this.tarefasService
+      .iniciar(id)
+      .then(() => {
+        console.log('Tarefa iniciada com sucesso');
+        this.listarTarefas();
+      })
+      .catch((erro: unknown) => {
+        console.error('Erro ao iniciar tarefa:', erro);
+      });
+  }
+
+  protected reabrirTarefa(id: string) {
+    this.tarefasService
+      .reabrir(id)
+      .then(() => {
+        console.log('Tarefa reaberta com sucesso');
+        this.listarTarefas();
+      })
+      .catch((erro: unknown) => {
+        console.error('Erro ao reabrir tarefa:', erro);
+      });
+  }
+
+  protected pausarTarefa(id: string) {
+    this.tarefasService
+      .pausar(id)
+      .then(() => {
+        console.log('Tarefa pausada com sucesso');
+        this.listarTarefas();
+      })
+      .catch((erro: unknown) => {
+        console.error('Erro ao pausar tarefa:', erro);
+      });
+  }
+
   protected editarTarefa(id: string) {
-    console.log('Editando tarefa', id);
-    // sua lógica de edição
+    const tarefa = this.tarefas()?.tarefas.find(t => t._id === id);
+    if (tarefa) {
+      this.tarefaSelecionada = tarefa;
+      this.tarefaForm = {
+        titulo: tarefa.titulo,
+        descricao: tarefa.descricao,
+        data_prevista: new Date(tarefa.data_prevista),
+      };
+      this.dialogRef = this.dialog.open(this.modalTarefaTemplate);
+    }
+  }
+
+  protected salvarTarefa() {
+    if (!this.tarefaForm.titulo || !this.tarefaForm.data_prevista) {
+      console.warn('Campos obrigatórios ausentes');
+      return;
+    }
+
+    if (this.tarefaSelecionada) {
+      // Edição
+      this.tarefasService.atualizar(this.tarefaSelecionada._id, this.tarefaForm)
+        .then(() => this.listarTarefas());
+    } else {
+      // Criação
+      this.tarefasService.criar(this.tarefaForm)
+        .then(() => this.listarTarefas());
+    }
+
+    this.dialogRef.close();
   }
 
   protected excluirTarefa(id: string) {

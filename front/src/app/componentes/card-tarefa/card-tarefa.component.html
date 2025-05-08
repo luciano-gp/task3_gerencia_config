@@ -3,8 +3,20 @@
     <mat-card-content>
       <h3>{{ tarefa().titulo }}</h3>
       <p>{{ tarefa().descricao }}</p>
+      @if (tarefa().data_encerramento) {
+        <span>Data de Conclusão: {{ tarefa().data_encerramento | date: 'longDate' }}</span>
+      } @else {
+        <span>Data de Previsão: {{ tarefa().data_prevista | date: 'longDate' }}</span>
+      }
       <mat-card-actions class="card-actions">
-        <button mat-flat-button (click)="concluirTarefa()">Concluir</button>
+        @if (tarefa().situacao === 'pendente') {
+          <button mat-flat-button (click)="iniciarTarefa()">Iniciar</button>
+        } @else if (tarefa().situacao === 'em_andamento') {
+          <button mat-flat-button (click)="concluirTarefa()">Concluir</button>
+          <button mat-raised-button (click)="pausarTarefa()">Pausar</button>
+        } @else if (tarefa().situacao === 'concluida') {
+          <button mat-flat-button (click)="reabrirTarefa()">Reabrir</button>
+        }
         <button mat-raised-button (click)="editarTarefa()">Editar</button>
         <button mat-stroked-button (click)="excluirTarefa()">Excluir</button>
       </mat-card-actions>

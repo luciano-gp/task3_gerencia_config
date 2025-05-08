@@ -22,11 +22,26 @@ export class CardTarefaComponent {
   tarefa = input.required<ITarefa>();
 
   concluir = output<void>();
+  iniciar = output<void>();
+  reabrir = output<void>();
+  pausar = output<void>();
   editar = output<void>();
   excluir = output<void>();
 
   concluirTarefa() {
     this.concluir.emit();
+  }
+
+  iniciarTarefa() {
+    this.iniciar.emit();
+  }
+
+  reabrirTarefa() {
+    this.reabrir.emit();
+  }
+
+  pausarTarefa() {
+    this.pausar.emit();
   }
 
   editarTarefa() {
