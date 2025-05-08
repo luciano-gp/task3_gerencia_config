@@ -1,0 +1,13 @@
+* {
+  color: white;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+body {
+  background-color: var(--mat-sys-inverse-on-surface);
+}

@@ -1,0 +1,25 @@
+<div class="container">
+  <h2>Minhas Tarefas</h2>
+  @if (carregando()) {
+    <div class="loading">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+  } @else {
+    <mat-list>
+      @for(t of tarefas()?.tarefas; track t._id) {
+        <mat-list-item class="list-item">
+          <mat-icon matListIcon>
+            {{ t.situacao === "concluida" ? "check_circle" : "radio_button_unchecked" }}
+          </mat-icon>
+
+          <div class="conteudo">
+            <div class="descricao">{{ t.descricao }}</div>
+            <div class="data">{{ t.data_prevista | date : "shortDate" }}</div>
+          </div>
+        </mat-list-item>
+      } @empty {
+        <div class="mensagem">Nenhuma tarefa encontrada.</div>
+      }
+    </mat-list>
+  }
+</div>

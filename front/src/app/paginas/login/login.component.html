@@ -1,0 +1,23 @@
+<div class="login-container" >
+  <mat-card class="login-card">
+    <h2 >Entrar</h2>
+
+    <form [formGroup]="formulario" (ngSubmit)="logar()" class="login-form">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" type="email" required />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Senha</mat-label>
+        <input matInput formControlName="senha" type="password" required />
+      </mat-form-field>
+
+      <button mat-flat-button color="primary" class="full-width" type="submit">
+        Entrar
+      </button>
+
+      <mat-error *ngIf="erro">{{ erro }}</mat-error>
+    </form>
+  </mat-card>
+</div>

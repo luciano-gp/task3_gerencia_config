@@ -1,0 +1,34 @@
+:root {
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--mat-sys-inverse-on-surface);
+}
+
+.container {
+  max-width: 800px;
+  margin: 32px auto;
+  padding: 16px;
+  background-color: var(--mat-sys-surface);
+}
+
+.data {
+  font-size: 0.85rem;
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.list-item {
+  .conteudo {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .descricao {
+    font-weight: 500;
+  }
+
+  .data {
+    font-size: 0.85rem;
+    color: var(--md-sys-color-on-surface-variant);
+  }
+}
