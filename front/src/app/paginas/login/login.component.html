@@ -1,20 +1,36 @@
-<div class="login-container" >
+<div class="login-container">
   <mat-card class="login-card">
-    <h2 >Entrar</h2>
+    <h2>{{ titulo }}</h2>
 
-    <form [formGroup]="formulario" (ngSubmit)="logar()" class="login-form">
-      <mat-form-field appearance="outline" class="full-width">
+    <form [formGroup]="formulario" class="login-form">
+      @if(titulo === 'Cadastrar') {
+        <mat-form-field appearance="outline">
+          <mat-label>Nome</mat-label>
+          <input matInput formControlName="nome" type="text" required />
+        </mat-form-field>
+      }
+
+      <mat-form-field appearance="outline">
         <mat-label>Email</mat-label>
         <input matInput formControlName="email" type="email" required />
       </mat-form-field>
 
-      <mat-form-field appearance="outline" class="full-width">
+      <mat-form-field appearance="outline">
         <mat-label>Senha</mat-label>
         <input matInput formControlName="senha" type="password" required />
       </mat-form-field>
 
-      <button mat-flat-button color="primary" class="full-width" type="submit">
-        Entrar
+      @if(titulo === 'Entrar') {
+        <button mat-flat-button (click)="logar()" [disabled]="formulario.invalid">
+          Entrar
+        </button>
+      }
+      <button
+        mat-stroked-button
+        (click)="cadastrar()"
+        [disabled]="formulario.invalid"
+      >
+        Cadastrar
       </button>
 
       <mat-error *ngIf="erro">{{ erro }}</mat-error>

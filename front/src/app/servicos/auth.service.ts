@@ -5,13 +5,19 @@ import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private readonly api = environment.apiUrl;
+  private readonly apiUrl = environment.apiUrl;
 
   private http = inject(HttpClient);
 
   async login(email: string, senha: string): Promise<void> {
-    const res = await lastValueFrom(this.http.post<{ accessToken: string }>(`${this.api}/login`, { email, senha }));
+    const res = await lastValueFrom(this.http.post<{ accessToken: string }>(`${this.apiUrl}/login`, { email, senha }));
     localStorage.setItem('accessToken', res!.accessToken);
+  }
+
+  async cadastrar(email: string, senha: string, nome: string): Promise<void> {
+    await lastValueFrom(
+      this.http.post(`${this.apiUrl}/usuarios`, { email, senha, nome })
+    );
   }
 
   logout() {
@@ -23,7 +29,7 @@ export class AuthService {
   }
 
   async refreshToken(): Promise<string> {
-    const res = await lastValueFrom(this.http.post<{ token: string }>(`${this.api}/refresh-token`, {}, { withCredentials: true }));
+    const res = await lastValueFrom(this.http.post<{ token: string }>(`${this.apiUrl}/refresh-token`, {}, { withCredentials: true }));
     localStorage.setItem('accessToken', res!.token);
     return res!.token;
   }

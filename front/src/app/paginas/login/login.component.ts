@@ -30,8 +30,11 @@ export class LoginComponent {
 
   protected erro = '';
 
+  protected titulo = 'Entrar';
+
   protected formulario = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
+    nome: [''],
     senha: ['', Validators.required],
   });
 
@@ -48,4 +51,24 @@ export class LoginComponent {
       this.erro = 'Credenciais inválidas';
     }
   }
+
+  protected async cadastrar() {
+    if (this.titulo === 'Cadastrar') {
+      this.erro = '';
+      if (this.formulario.invalid) return;
+
+      const { email, senha, nome } = this.formulario.value;
+
+      try {
+        await this.auth.cadastrar(email!, senha!, nome!);
+        await this.auth.login(email!, senha!);
+        this.router.navigateByUrl('/tarefas');
+      } catch {
+        this.erro = 'Erro ao cadastrar usuário';
+      }
+    } else {
+      this.titulo = 'Cadastrar';
+    }
+  }
+
 }
