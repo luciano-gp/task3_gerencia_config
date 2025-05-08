@@ -41,6 +41,8 @@ describe("notificarTarefa", () => {
   it("não deve enviar e-mail se o usuário não for encontrado", async () => {
     (Usuario.findById as jest.Mock).mockResolvedValue(null);
 
+    jest.spyOn(console, 'warn').mockImplementation(() => {});
+
     await notificarTarefa("criada", mockTarefa);
 
     expect(enviarEmail).not.toHaveBeenCalled();
@@ -74,6 +76,8 @@ describe("notificarNovoUsuario", () => {
       nome: "Luciano",
       email: null,
     } as any;
+
+    jest.spyOn(console, 'warn').mockImplementation(() => {});
 
     await notificarNovoUsuario(usuario);
 
