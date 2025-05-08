@@ -1,25 +1,71 @@
 <div class="container">
-  <h2>Minhas Tarefas</h2>
+  <div class="cabecalho">
+    <h1>Tarefas</h1>
+    <!-- <button mat-flat-button color="primary" (click)="abrirModalCriarTarefa()">Criar Tarefa</button> -->
+  </div>
+  <div class="filtros">
+    <mat-form-field appearance="fill">
+      <mat-label>Filtrar por título</mat-label>
+      <input matInput (input)="filtrarTarefas($event)" />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Filtrar por status</mat-label>
+      <mat-select (selectionChange)="filtrarTarefasPorStatus($event.value)">
+        <mat-option value="">Todos</mat-option>
+        <mat-option value="pendente">Pendentes</mat-option>
+        <mat-option value="em_andamento">Em Andamento</mat-option>
+        <mat-option value="concluida">Concluídas</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Filtrar por intervalo</mat-label>
+      <mat-date-range-input [rangePicker]="rangePicker">
+        <input matStartDate placeholder="Início" (dateChange)="filtrarDataInicio($event.value)" />
+        <input matEndDate placeholder="Fim" (dateChange)="filtrarDataFim($event.value)" />
+      </mat-date-range-input>
+      <mat-datepicker-toggle matSuffix [for]="rangePicker"></mat-datepicker-toggle>
+      <mat-date-range-picker #rangePicker></mat-date-range-picker>
+    </mat-form-field>
+  </div>
+  <div class="filtros">
+    <button mat-flat-button color="primary" (click)="ordenarTarefas('titulo')">Ordenar por Título</button>
+    <button mat-flat-button color="primary" (click)="ordenarTarefas('situacao')">Ordenar por Status</button>
+    <button mat-flat-button color="primary" (click)="ordenarTarefas('data_criacao')">Ordenar por Data de Criação</button>
+    <button mat-flat-button color="primary" (click)="ordenarTarefas('data_encerramento')">Ordenar por Data de Conclusão</button>
+  </div>
   @if (carregando()) {
     <div class="loading">
       <mat-spinner diameter="40"></mat-spinner>
     </div>
   } @else {
-    <mat-list>
-      @for(t of tarefas()?.tarefas; track t._id) {
-        <mat-list-item class="list-item">
-          <mat-icon matListIcon>
-            {{ t.situacao === "concluida" ? "check_circle" : "radio_button_unchecked" }}
-          </mat-icon>
-
-          <div class="conteudo">
-            <div class="descricao">{{ t.descricao }}</div>
-            <div class="data">{{ t.data_prevista | date : "shortDate" }}</div>
-          </div>
-        </mat-list-item>
-      } @empty {
-        <div class="mensagem">Nenhuma tarefa encontrada.</div>
-      }
-    </mat-list>
+    @for (tarefa of tarefas()?.tarefas; track tarefa._id) {
+      <app-card-tarefa
+        [tarefa]="tarefa"
+        (concluir)="concluirTarefa(tarefa._id)"
+        (editar)="editarTarefa(tarefa._id)"
+        (excluir)="excluirTarefa(tarefa._id)"
+      ></app-card-tarefa>
+    }
+    @empty {
+      <div class="mensagem">Nenhuma tarefa encontrada.</div>
+    }
+    @if(tarefas()?.totalPages) {
+      <div class="paginacao">
+        <button mat-button (click)="paginaAnterior()" [disabled]="pagina() === 1">Anterior</button>
+        Página {{ pagina() }} de {{ tarefas()?.totalPages }}
+        <button mat-button (click)="proximaPagina()" [disabled]="pagina() === tarefas()?.totalPages">Próxima</button>
+      </div>
+    }
   }
 </div>
+
+<ng-template #confirmarExclusaoTemplate let-dialog>
+  <h2 mat-dialog-title>Confirmar Exclusão</h2>
+  <mat-dialog-content>
+    Tem certeza que deseja excluir <strong>{{ tarefaSelecionada?.titulo || 'esta tarefa' }}</strong>?
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button (click)="dialog.close()">Cancelar</button>
+    <button mat-flat-button (click)="confirmarExclusao()">Excluir</button>
+  </mat-dialog-actions>
+</ng-template>

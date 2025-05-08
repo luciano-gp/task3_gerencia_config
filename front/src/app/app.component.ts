@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -9,7 +8,7 @@ import { AuthService } from './servicos/auth.service';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
-  imports: [NgIf, MatToolbarModule, MatButtonModule, RouterModule],
+  imports: [MatToolbarModule, MatButtonModule, RouterModule],
 })
 export class AppComponent {
   private auth = inject(AuthService);

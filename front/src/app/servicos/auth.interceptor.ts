@@ -8,17 +8,21 @@ export class AuthInterceptor implements HttpInterceptor {
   private auth = inject(AuthService);
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    if (req.url.endsWith('/refresh-token')) {
+      return next.handle(req);
+    }
+
     const token = this.auth.getToken();
 
     let reqClone = req;
-    if (token) {
-      reqClone = req.clone({
+    reqClone = req.clone({
+      ...(token && {
         setHeaders: {
           Authorization: `Bearer ${token}`,
         },
-        withCredentials: true,
-      });
-    }
+      }),
+      withCredentials: true,
+    });
 
     return next.handle(reqClone).pipe(
       catchError((error: HttpErrorResponse) => {
@@ -30,7 +34,8 @@ export class AuthInterceptor implements HttpInterceptor {
                 withCredentials: true,
               });
               return next.handle(novoReq);
-            })
+            }),
+            catchError(() => throwError(() => error))
           );
         }
 

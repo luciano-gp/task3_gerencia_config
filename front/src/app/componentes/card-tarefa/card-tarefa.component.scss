@@ -1,0 +1,21 @@
+.card {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+
+  &-actions {
+    gap: 16px;
+    justify-content: end;
+  }
+}
+
+.concluida {
+  border-left: 5px solid green;
+}
+
+.em_andamento {
+  border-left: 5px solid cyan;
+}
+
+.pendente {
+  border-left: 5px solid orange;
+}

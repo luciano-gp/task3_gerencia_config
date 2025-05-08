@@ -1,0 +1,13 @@
+<mat-list-item>
+  <mat-card class="card" [class]="tarefa().situacao">
+    <mat-card-content>
+      <h3>{{ tarefa().titulo }}</h3>
+      <p>{{ tarefa().descricao }}</p>
+      <mat-card-actions class="card-actions">
+        <button mat-flat-button (click)="concluirTarefa()">Concluir</button>
+        <button mat-raised-button (click)="editarTarefa()">Editar</button>
+        <button mat-stroked-button (click)="excluirTarefa()">Excluir</button>
+      </mat-card-actions>
+    </mat-card-content>
+  </mat-card>
+</mat-list-item>

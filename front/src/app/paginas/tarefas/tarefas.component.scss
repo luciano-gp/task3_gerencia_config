@@ -1,34 +1,23 @@
-:root {
-  width: 100vw;
-  height: 100vh;
-  background-color: var(--mat-sys-inverse-on-surface);
-}
-
 .container {
-  max-width: 800px;
-  margin: 32px auto;
+  width: calc(100vw - 48px);
+  height: calc(100% - 64px);
+  min-height: calc(100vh - 64px);
   padding: 16px;
-  background-color: var(--mat-sys-surface);
+  background-color: var(--mat-sys-inverse-on-surface);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
-.data {
-  font-size: 0.85rem;
-  color: var(--md-sys-color-on-surface-variant);
+.filtros {
+  display: flex;
+  gap: 16px;
 }
 
-.list-item {
-  .conteudo {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-  }
-
-  .descricao {
-    font-weight: 500;
-  }
-
-  .data {
-    font-size: 0.85rem;
-    color: var(--md-sys-color-on-surface-variant);
-  }
+.paginacao {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
 }
