@@ -126,11 +126,11 @@ export const atualizarHandler = async (req: AuthRequest, res: Response) => {
   for (const campo of camposPermitidos) {
     if (campo in req.body) atualizacoes[campo] = req.body[campo];
   }
-
+  
   const tarefa = await Tarefa.findOneAndUpdate(
     { _id: req.params.id, usuario: req.usuario_id },
     atualizacoes,
-    { new: true, runValidators: true }
+    { runValidators: true }
   );
 
   if (!tarefa) {
