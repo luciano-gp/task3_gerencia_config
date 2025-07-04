@@ -1,0 +1,32 @@
+name: CI/CD - Deploy Homolog
+
+on:
+  push:
+    branches: [homolog]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v3
+
+      - name: Configurar SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy na VM (homolog)
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << EOF
+            set -e
+            cd ${{ secrets.DEPLOY_PATH }}
+
+            # Garante que estamos na branch certa
+            git fetch origin
+            git checkout ${{ secrets.HOMOLOG_BRANCH }}
+            git reset --hard origin/${{ secrets.HOMOLOG_BRANCH }}
+
+            docker-compose -f docker-compose.yml -f docker-compose.homolog.yml up -d --build
+          EOF

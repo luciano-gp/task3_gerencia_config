@@ -1,0 +1,33 @@
+name: Deploy para Produção
+
+on:
+  workflow_dispatch:  # acionado manualmente
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Configurar SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Promover Homologação → Produção
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << EOF
+            set -e
+
+            # Copia arquivos da pasta de homolog para produção
+            rsync -av --exclude='node_modules' --exclude='.git' \
+              ${{ secrets.DEPLOY_PATH }} ${{ secrets.PROMOTE_PATH }}
+
+            cd ${{ secrets.PROMOTE_PATH }}
+
+            # Garante que estamos na branch certa
+            git fetch origin
+            git checkout ${{ secrets.PRODUCTION_BRANCH }}
+            git reset --hard origin/${{ secrets.PRODUCTION_BRANCH }}
+
+            docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+          EOF

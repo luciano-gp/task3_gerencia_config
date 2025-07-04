@@ -1,0 +1,29 @@
+services:
+  mongo:
+    container_name: mongo_tarefas_homolog
+    ports:
+      - "27018:27017"
+    volumes:
+      - mongodb_data_homolog:/data/db
+    networks:
+      - backend_homolog
+
+  api:
+    container_name: api_tarefas_homolog
+    ports:
+      - "3001:3000"
+    networks:
+      - backend_homolog
+
+  front:
+    container_name: front_tarefas_homolog
+    ports:
+      - "8081:80"
+    networks:
+      - backend_homolog
+
+volumes:
+  mongodb_data_homolog:
+
+networks:
+  backend_homolog:

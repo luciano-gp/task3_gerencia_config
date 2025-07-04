@@ -1,0 +1,29 @@
+services:
+  mongo:
+    container_name: mongo_tarefas_prod
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data_prod:/data/db
+    networks:
+      - backend_prod
+
+  api:
+    container_name: api_tarefas_prod
+    ports:
+      - "3000:3000"
+    networks:
+      - backend_prod
+
+  front:
+    container_name: front_tarefas_prod
+    ports:
+      - "80:80"
+    networks:
+      - backend_prod
+
+volumes:
+  mongodb_data_prod:
+
+networks:
+  backend_prod:
