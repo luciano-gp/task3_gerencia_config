@@ -26,6 +26,8 @@ jobs:
             set -e
             cd $DEPLOY_PATH
 
+            ls -la $DEPLOY_PATH
+
             # Garante que estamos na branch certa
             git fetch origin
             git checkout $HOMOLOG_BRANCH
