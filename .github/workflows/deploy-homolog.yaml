@@ -34,5 +34,5 @@ jobs:
             git reset --hard origin/$HOMOLOG_BRANCH
             git pull
 
-            sudo docker compose -f docker-compose.homolog.yml up -d --build
+            sudo docker compose docker-compose.homolog.yml up -d --build
           EOF
