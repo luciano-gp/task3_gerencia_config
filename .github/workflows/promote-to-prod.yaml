@@ -24,7 +24,7 @@ jobs:
 
             # Copia arquivos da pasta de homolog para produção
             rsync -av --exclude='node_modules' --exclude='.git' \
-              $DEPLOY_PATH $PROMOTE_PATH
+              $DEPLOY_PATH/ $PROMOTE_PATH
 
             cd $PROMOTE_PATH
             ls -la $PROMOTE_PATH
