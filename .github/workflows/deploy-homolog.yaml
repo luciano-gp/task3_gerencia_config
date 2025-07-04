@@ -22,7 +22,7 @@ jobs:
           DEPLOY_PATH=${{ secrets.DEPLOY_PATH }}
           HOMOLOG_BRANCH=${{ secrets.HOMOLOG_BRANCH }}
 
-          ssh -T -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << EOF
+          ssh -v -T -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << EOF
             set -e
             cd $DEPLOY_PATH
 

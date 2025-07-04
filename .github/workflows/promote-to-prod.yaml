@@ -19,7 +19,7 @@ jobs:
           PROMOTE_PATH=${{ secrets.PROMOTE_PATH }}
           PRODUCTION_BRANCH=${{ secrets.PRODUCTION_BRANCH }}
 
-          ssh -T -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << EOF
+          ssh -v -T -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << EOF
             set -e
 
             # Copia arquivos da pasta de homolog para produção
