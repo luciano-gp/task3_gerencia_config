@@ -19,7 +19,7 @@ jobs:
 
       - name: Deploy na VM (homolog)
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << EOF
+          ssh -T -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << EOF
             set -e
             cd ${{ secrets.DEPLOY_PATH }}
 

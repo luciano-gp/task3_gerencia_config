@@ -15,7 +15,7 @@ jobs:
 
       - name: Promover Homologação → Produção
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << EOF
+          ssh -T -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << EOF
             set -e
 
             # Copia arquivos da pasta de homolog para produção
