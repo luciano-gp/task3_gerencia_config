@@ -27,6 +27,7 @@ jobs:
               $DEPLOY_PATH $PROMOTE_PATH
 
             cd $PROMOTE_PATH
+            ls -la $PROMOTE_PATH
 
             sudo docker compose -f docker-compose.yaml -f docker-compose.prod.yaml up -d
           EOF
