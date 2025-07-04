@@ -17,10 +17,6 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Testar conexão básica sem chave
-        run: |
-            ssh -v -o StrictHostKeyChecking=no -o ConnectTimeout=10 ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} exit
-
       - name: Deploy na VM (homolog)
         run: |
           DEPLOY_PATH=${{ secrets.DEPLOY_PATH }}
