@@ -17,6 +17,9 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
+      - name: Debug SSH
+        run: ssh-add -l
+
       - name: Deploy na VM (homolog)
         run: |
           DEPLOY_PATH=${{ secrets.DEPLOY_PATH }}
