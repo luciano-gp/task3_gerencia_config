@@ -19,14 +19,17 @@ jobs:
 
       - name: Deploy na VM (homolog)
         run: |
+          DEPLOY_PATH=${{ secrets.DEPLOY_PATH }}
+          HOMOLOG_BRANCH=${{ secrets.HOMOLOG_BRANCH }}
+
           ssh -T -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << EOF
             set -e
-            cd ${{ secrets.DEPLOY_PATH }}
+            cd $DEPLOY_PATH
 
             # Garante que estamos na branch certa
             git fetch origin
-            git checkout ${{ secrets.HOMOLOG_BRANCH }}
-            git reset --hard origin/${{ secrets.HOMOLOG_BRANCH }}
+            git checkout $HOMOLOG_BRANCH
+            git reset --hard origin/$HOMOLOG_BRANCH
 
             docker-compose -f docker-compose.yml -f docker-compose.homolog.yml up -d --build
           EOF

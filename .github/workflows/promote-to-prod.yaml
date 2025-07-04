@@ -15,19 +15,23 @@ jobs:
 
       - name: Promover Homologação → Produção
         run: |
+          DEPLOY_PATH=${{ secrets.DEPLOY_PATH }}
+          PROMOTE_PATH=${{ secrets.PROMOTE_PATH }}
+          PRODUCTION_BRANCH=${{ secrets.PRODUCTION_BRANCH }}
+
           ssh -T -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << EOF
             set -e
 
             # Copia arquivos da pasta de homolog para produção
             rsync -av --exclude='node_modules' --exclude='.git' \
-              ${{ secrets.DEPLOY_PATH }} ${{ secrets.PROMOTE_PATH }}
+              $DEPLOY_PATH $PROMOTE_PATH
 
-            cd ${{ secrets.PROMOTE_PATH }}
+            cd $PROMOTE_PATH
 
             # Garante que estamos na branch certa
             git fetch origin
-            git checkout ${{ secrets.PRODUCTION_BRANCH }}
-            git reset --hard origin/${{ secrets.PRODUCTION_BRANCH }}
+            git checkout $PRODUCTION_BRANCH
+            git reset --hard origin/$PRODUCTION_BRANCH
 
             docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
           EOF
