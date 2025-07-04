@@ -28,10 +28,5 @@ jobs:
 
             cd $PROMOTE_PATH
 
-            # Garante que estamos na branch certa
-            git fetch origin
-            git checkout $PRODUCTION_BRANCH
-            git reset --hard origin/$PRODUCTION_BRANCH
-
-            docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+            sudo docker compose -f docker-compose.prod.yml up -d
           EOF
