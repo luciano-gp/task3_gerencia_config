@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="35" failures="0" errors="0" time="1.681">
+  <testsuite name="enviarEmail" errors="0" failures="0" skipped="0" timestamp="2025-07-08T04:04:57" time="1.023" tests="1">
+    <testcase classname="enviarEmail deve chamar função de envio de email com os dados corretos" name="enviarEmail deve chamar função de envio de email com os dados corretos" time="0.006">
+    </testcase>
+  </testsuite>
+  <testsuite name="gerarToken" errors="0" failures="0" skipped="0" timestamp="2025-07-08T04:04:57" time="1.029" tests="2">
+    <testcase classname="gerarToken deve gerar um token JWT válido com o ID do usuário" name="gerarToken deve gerar um token JWT válido com o ID do usuário" time="0.004">
+    </testcase>
+    <testcase classname="gerarToken deve gerar um token JWT que irá expirar em 1 dia" name="gerarToken deve gerar um token JWT que irá expirar em 1 dia" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="Model Usuario" errors="0" failures="0" skipped="0" timestamp="2025-07-08T04:04:57" time="1.164" tests="3">
+    <testcase classname="Model Usuario deve exigir o campo email" name="Model Usuario deve exigir o campo email" time="0.005">
+    </testcase>
+    <testcase classname="Model Usuario deve exigir o campo senha" name="Model Usuario deve exigir o campo senha" time="0.001">
+    </testcase>
+    <testcase classname="Model Usuario deve exigir o campo nome" name="Model Usuario deve exigir o campo nome" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="Tarefa model" errors="0" failures="0" skipped="0" timestamp="2025-07-08T04:04:57" time="1.181" tests="6">
+    <testcase classname="Tarefa model deve exigir o titulo ao criar tarefa" name="Tarefa model deve exigir o titulo ao criar tarefa" time="0.004">
+    </testcase>
+    <testcase classname="Tarefa model deve exigir a data_prevista ao criar tarefa" name="Tarefa model deve exigir a data_prevista ao criar tarefa" time="0.001">
+    </testcase>
+    <testcase classname="Tarefa model deve aceitar situação de tarefa &quot;concluida&quot;" name="Tarefa model deve aceitar situação de tarefa &quot;concluida&quot;" time="0">
+    </testcase>
+    <testcase classname="Tarefa model deve aceitar situação de tarefa &quot;em_andamento&quot;" name="Tarefa model deve aceitar situação de tarefa &quot;em_andamento&quot;" time="0.001">
+    </testcase>
+    <testcase classname="Tarefa model deve aceitar situação de tarefa &quot;pendente&quot;" name="Tarefa model deve aceitar situação de tarefa &quot;pendente&quot;" time="0">
+    </testcase>
+    <testcase classname="Tarefa model deve recusar situação de tarefa &quot;inválida&quot;" name="Tarefa model deve recusar situação de tarefa &quot;inválida&quot;" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="Rotas de Usuário" errors="0" failures="0" skipped="0" timestamp="2025-07-08T04:04:57" time="1.217" tests="6">
+    <testcase classname="Rotas de Usuário POST /usuarios deve cadastrar novo usuário" name="Rotas de Usuário POST /usuarios deve cadastrar novo usuário" time="0.005">
+    </testcase>
+    <testcase classname="Rotas de Usuário POST /login deve autenticar com sucesso e retornar token" name="Rotas de Usuário POST /login deve autenticar com sucesso e retornar token" time="0.001">
+    </testcase>
+    <testcase classname="Rotas de Usuário POST /login deve falhar com credenciais inválidas" name="Rotas de Usuário POST /login deve falhar com credenciais inválidas" time="0">
+    </testcase>
+    <testcase classname="Rotas de Usuário POST /refresh-token deve gerar novo access token com refresh válido" name="Rotas de Usuário POST /refresh-token deve gerar novo access token com refresh válido" time="0">
+    </testcase>
+    <testcase classname="Rotas de Usuário POST /refresh-token deve retornar erro se token ausente" name="Rotas de Usuário POST /refresh-token deve retornar erro se token ausente" time="0">
+    </testcase>
+    <testcase classname="Rotas de Usuário POST /refresh-token deve retornar erro se token inválido" name="Rotas de Usuário POST /refresh-token deve retornar erro se token inválido" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="notificarTarefa" errors="0" failures="0" skipped="0" timestamp="2025-07-08T04:04:57" time="1.25" tests="4">
+    <testcase classname="notificarTarefa deve enviar e-mail quando tarefa é criada" name="notificarTarefa deve enviar e-mail quando tarefa é criada" time="0.01">
+    </testcase>
+    <testcase classname="notificarTarefa não deve enviar e-mail se o usuário não for encontrado" name="notificarTarefa não deve enviar e-mail se o usuário não for encontrado" time="0.001">
+    </testcase>
+    <testcase classname="notificarNovoUsuario deve enviar e-mail ao novo usuário" name="notificarNovoUsuario deve enviar e-mail ao novo usuário" time="0">
+    </testcase>
+    <testcase classname="notificarNovoUsuario não deve enviar e-mail se não houver email" name="notificarNovoUsuario não deve enviar e-mail se não houver email" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="handlers de tarefa" errors="0" failures="0" skipped="0" timestamp="2025-07-08T04:04:57" time="1.292" tests="12">
+    <testcase classname="handlers de tarefa buscarHandler deve retornar a tarefa se encontrada" name="handlers de tarefa buscarHandler deve retornar a tarefa se encontrada" time="0.002">
+    </testcase>
+    <testcase classname="handlers de tarefa buscarHandler deve retornar 404 se não encontrar tarefa" name="handlers de tarefa buscarHandler deve retornar 404 se não encontrar tarefa" time="0">
+    </testcase>
+    <testcase classname="handlers de tarefa listarHandler deve retornar tarefas paginadas com total" name="handlers de tarefa listarHandler deve retornar tarefas paginadas com total" time="0">
+    </testcase>
+    <testcase classname="handlers de tarefa criarHandler deve criar uma nova tarefa e notificar" name="handlers de tarefa criarHandler deve criar uma nova tarefa e notificar" time="0.003">
+    </testcase>
+    <testcase classname="handlers de tarefa editarHandler deve editar tarefa existente e notificar" name="handlers de tarefa editarHandler deve editar tarefa existente e notificar" time="0">
+    </testcase>
+    <testcase classname="handlers de tarefa editarHandler deve retornar 404 se tarefa não encontrada" name="handlers de tarefa editarHandler deve retornar 404 se tarefa não encontrada" time="0">
+    </testcase>
+    <testcase classname="handlers de tarefa atualizarHandler deve atualizar campos permitidos e notificar" name="handlers de tarefa atualizarHandler deve atualizar campos permitidos e notificar" time="0">
+    </testcase>
+    <testcase classname="handlers de tarefa atualizarHandler deve retornar 404 se tarefa não encontrada" name="handlers de tarefa atualizarHandler deve retornar 404 se tarefa não encontrada" time="0">
+    </testcase>
+    <testcase classname="handlers de tarefa deletarHandler deve deletar tarefa e retornar sucesso" name="handlers de tarefa deletarHandler deve deletar tarefa e retornar sucesso" time="0">
+    </testcase>
+    <testcase classname="handlers de tarefa deletarHandler deve retornar 404 se tarefa não encontrada" name="handlers de tarefa deletarHandler deve retornar 404 se tarefa não encontrada" time="0.001">
+    </testcase>
+    <testcase classname="handlers de tarefa relatorioHandler deve chamar gerarRelatorioDeTarefas" name="handlers de tarefa relatorioHandler deve chamar gerarRelatorioDeTarefas" time="0">
+    </testcase>
+    <testcase classname="handlers de tarefa relatorioHandler deve retornar 500 em caso de erro" name="handlers de tarefa relatorioHandler deve retornar 500 em caso de erro" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="gerarRelatorioDeTarefas" errors="0" failures="0" skipped="0" timestamp="2025-07-08T04:04:57" time="1.321" tests="1">
+    <testcase classname="gerarRelatorioDeTarefas deve gerar um PDF com os dados das tarefas" name="gerarRelatorioDeTarefas deve gerar um PDF com os dados das tarefas" time="0.012">
+    </testcase>
+  </testsuite>
+</testsuites>
