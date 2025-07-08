@@ -1,4 +1,4 @@
-name: CI/CD - Deploy Homolog
+name: Deploy Homolog
 
 on:
   push:
@@ -11,6 +11,14 @@ jobs:
     steps:
       - name: Checkout código
         uses: actions/checkout@v4
+
+      - name: Instalar dependências do back-end
+        working-directory: ./back
+        run: npm install
+
+      - name: Executar testes
+        working-directory: ./back
+        run: npm test
 
       - name: Configurar SSH
         uses: webfactory/ssh-agent@v0.9.1

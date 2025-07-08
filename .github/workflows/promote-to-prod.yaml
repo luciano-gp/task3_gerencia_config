@@ -1,4 +1,4 @@
-name: Deploy para Produção
+name: Deploy Production
 
 on:
   workflow_dispatch:  # acionado manualmente
