@@ -4,5 +4,11 @@
   },
   "scripts": {
     "prepare": "husky"
-  }
+  },
+  "name": "task3_gerencia_config",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
