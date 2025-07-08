@@ -4,4 +4,8 @@ module.exports = {
   transform: {
     "^.+\.tsx?$": ["ts-jest",{}],
   },
+  reporters: [
+    "default",
+    [ "jest-junit", { outputDirectory: "./test-results", outputName: "results.xml" } ]
+  ]
 };
