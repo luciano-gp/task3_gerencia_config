@@ -4,6 +4,10 @@ on:
   push:
     branches: [homolog]
 
+permissions:
+  checks: write
+  contents: read
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
