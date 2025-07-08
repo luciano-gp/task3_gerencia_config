@@ -22,11 +22,19 @@ jobs:
           mkdir -p test-results
           npx jest --ci
 
-      - name: Upload do relatório de testes
+      - name: Upload do relatório de testes em XML
         uses: actions/upload-artifact@v4
         with:
           name: tests-report
           path: ./back/test-results/results.xml
+
+      - name: Publicar relatório de testes no GitHub Actions
+        uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: tests-report-view
+          path: ./back/test-results/results.xml
+          reporter: jest-junit
 
       - name: Configurar SSH
         uses: webfactory/ssh-agent@v0.9.1
