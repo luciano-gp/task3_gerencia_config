@@ -14,6 +14,8 @@ services:
       - "3000:3000"
     networks:
       - backend_prod
+    env_file:
+      - ./back/.env
 
   front:
     container_name: front_tarefas_prod
@@ -21,7 +23,7 @@ services:
       context: ./front
       dockerfile: Dockerfile
       args:
-        ENVIRONMENT: prod
+        ENVIRONMENT: production
     ports:
       - "80:80"
     networks:

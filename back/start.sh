@@ -3,7 +3,7 @@ set -e
 
 echo "Aguardando MongoDB iniciar..."
 
-for i in {1..30}; do
+for i in {1..90}; do
   nc -z mongo 27017 && break
   echo "Mongo ainda não disponível... tentando de novo ($i)"
   sleep 1
