@@ -5,6 +5,7 @@ echo "Aguardando MongoDB iniciar..."
 
 for i in {1..90}; do
   nc -z mongo 27017 && break
+  nc -z mongo 27018 && break
   echo "Mongo ainda não disponível... tentando de novo ($i)"
   sleep 1
 done

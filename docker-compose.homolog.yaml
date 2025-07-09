@@ -22,8 +22,6 @@ services:
     build:
       context: ./front
       dockerfile: Dockerfile
-      args:
-        ENVIRONMENT: homolog
     ports:
       - "8081:80"
     networks:
