@@ -17,6 +17,11 @@ services:
 
   front:
     container_name: front_tarefas_homolog
+    build:
+      context: ./front
+      dockerfile: Dockerfile
+      args:
+        ENVIRONMENT: homolog
     ports:
       - "8081:80"
     networks:

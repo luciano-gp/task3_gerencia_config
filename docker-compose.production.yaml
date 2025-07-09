@@ -17,6 +17,11 @@ services:
 
   front:
     container_name: front_tarefas_prod
+    build:
+      context: ./front
+      dockerfile: Dockerfile
+      args:
+        ENVIRONMENT: prod
     ports:
       - "80:80"
     networks:
