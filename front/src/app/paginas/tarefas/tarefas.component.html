@@ -87,6 +87,11 @@
     </mat-form-field>
 
     <mat-form-field appearance="fill">
+      <mat-label>Descrição 2</mat-label>
+      <textarea matInput rows="1" [(ngModel)]="tarefaForm.descricao2"></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
       <mat-label>Data Prevista</mat-label>
       <input matInput [matDatepicker]="pickerData" [(ngModel)]="tarefaForm.data_prevista" />
       <mat-datepicker-toggle matSuffix [for]="pickerData"></mat-datepicker-toggle>

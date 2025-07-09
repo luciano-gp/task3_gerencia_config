@@ -3,6 +3,7 @@ import { Document, Schema, Types, model } from 'mongoose';
 export interface ITarefa extends Document {
   titulo: string;
   descricao: string;
+  descricao2: string;
   data_criacao: Date;
   data_prevista: Date;
   data_encerramento?: Date;
@@ -23,6 +24,7 @@ export interface ITarefaFiltro {
 const TarefaSchema = new Schema<ITarefa>({
   titulo: { type: String, required: true },
   descricao: { type: String },
+  descricao2: { type: String },
   data_criacao: { type: Date, default: Date.now },
   data_prevista: { type: Date, required: true },
   data_encerramento: { type: Date },

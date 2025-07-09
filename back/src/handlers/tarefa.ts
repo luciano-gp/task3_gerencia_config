@@ -77,10 +77,11 @@ export const listarHandler = async (req: AuthRequest, res: Response) => {
 
 // Criar
 export const criarHandler = async (req: AuthRequest, res: Response) => {
-  const { titulo, descricao, data_prevista } = req.body;
+  const { titulo, descricao, descricao2, data_prevista } = req.body;
   const tarefa = new Tarefa({
     titulo,
     descricao,
+    descricao2,
     data_prevista,
     usuario: req.usuario_id,
   });
@@ -93,12 +94,12 @@ export const criarHandler = async (req: AuthRequest, res: Response) => {
 
 // Editar
 export const editarHandler = async (req: AuthRequest, res: Response) => {
-  const { titulo, descricao, data_prevista, data_encerramento, situacao } =
+  const { titulo, descricao, descricao2, data_prevista, data_encerramento, situacao } =
     req.body;
 
   const tarefa = await Tarefa.findOneAndUpdate(
     { _id: req.params.id, usuario: req.usuario_id },
-    { titulo, descricao, data_prevista, data_encerramento, situacao },
+    { titulo, descricao, descricao2, data_prevista, data_encerramento, situacao },
     { new: true, runValidators: true }
   );
 
@@ -117,6 +118,7 @@ export const atualizarHandler = async (req: AuthRequest, res: Response) => {
   const camposPermitidos = [
     "titulo",
     "descricao",
+    "descricao2",
     "data_prevista",
     "data_encerramento",
     "situacao",

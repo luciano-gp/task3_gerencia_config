@@ -31,6 +31,7 @@ import { TarefasService } from '../../servicos/tarefas.service';
 interface ITarefaForm {
   titulo: string;
   descricao?: string;
+  descricao2?: string;
   data_prevista: Date;
 }
 
@@ -68,6 +69,7 @@ export class TarefasComponent {
   protected tarefaForm: ITarefaForm = {
     titulo: '',
     descricao: '',
+    descricao2: '',
     data_prevista: new Date(),
   };
 
