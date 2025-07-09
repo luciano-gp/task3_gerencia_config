@@ -128,6 +128,7 @@ export class TarefasComponent {
     this.tarefaForm = {
       titulo: '',
       descricao: '',
+      descricao2: '',
       data_prevista: new Date(),
     };
     this.dialogRef = this.dialog.open(this.modalTarefaTemplate);
@@ -238,6 +239,7 @@ export class TarefasComponent {
       this.tarefaForm = {
         titulo: tarefa.titulo,
         descricao: tarefa.descricao,
+        descricao2: tarefa.descricao2,
         data_prevista: new Date(tarefa.data_prevista),
       };
       this.dialogRef = this.dialog.open(this.modalTarefaTemplate);

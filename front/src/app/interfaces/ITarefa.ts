@@ -2,6 +2,7 @@ export interface ITarefa {
   _id: string;
   titulo: string;
   descricao?: string;
+  descricao2?: string;
   data_criacao: Date;
   data_prevista: Date;
   data_encerramento?: Date;
