@@ -131,7 +131,7 @@ export class TarefasComponent {
       descricao2: '',
       data_prevista: new Date(),
     };
-    this.dialogRef = this.dialog.open(this.modalTarefaTemplate);
+    this.dialogRef = this.dialog.open(this.modalTarefaTemplate, { width: '50%' });
   }
 
   protected listarTarefas() {
