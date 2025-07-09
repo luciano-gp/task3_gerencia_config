@@ -1,7 +1,6 @@
 services:
   mongo:
     image: mongo
-    container_name: mongo_tarefas
     ports:
       - "27017:27017"
     restart: always
@@ -14,7 +13,6 @@ services:
     build: 
       context: ./back
       dockerfile: Dockerfile
-    container_name: api_tarefas
     expose:
       - "3000"
     ports:
@@ -31,7 +29,6 @@ services:
     build:
       context: ./front
       dockerfile: Dockerfile
-    container_name: front_tarefas
     ports:
       - "80:80"
     depends_on:
