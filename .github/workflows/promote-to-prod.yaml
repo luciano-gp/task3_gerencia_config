@@ -22,16 +22,17 @@ jobs:
           ssh -p 2222 -v -T -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << EOF
             set -e
 
-            # Copia arquivos da pasta de homolog para produção
-            rsync -av --exclude='node_modules' --exclude='.git' \
-            --exclude='docker-compose.homolog.yaml' \
-            --exclude='*.homolog.env' \
-            --exclude='docker-compose.yaml' \
-            $DEPLOY_PATH/front $PROMOTE_PATH/front
+            echo "🚀 Copiando front e back"
+            rsync -av --exclude='node_modules' $DEPLOY_PATH/front $PROMOTE_PATH/
+            rsync -av --exclude='node_modules' $DEPLOY_PATH/back $PROMOTE_PATH/
 
-            rsync -av --exclude='node_modules' --exclude='.git' \
-            $DEPLOY_PATH/back $PROMOTE_PATH/back
+            echo "📄 Copiando docker-compose.production.yaml"
+            rsync -av $DEPLOY_PATH/docker-compose.production.yaml $PROMOTE_PATH/
 
+            echo "📦 Executando compose de produção"
             cd $PROMOTE_PATH
-            sudo docker compose -f docker-compose.production.yaml up -d --build
+            docker compose -f docker-compose.production.yaml up -d --build
+
+            docker ps -a --format "table {{.Names}}\t{{.Status}}\t{{.Image}}"
           EOF
+
