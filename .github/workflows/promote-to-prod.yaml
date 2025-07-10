@@ -24,10 +24,14 @@ jobs:
 
             # Copia arquivos da pasta de homolog para produção
             rsync -av --exclude='node_modules' --exclude='.git' \
-              $DEPLOY_PATH/ $PROMOTE_PATH
+            --exclude='docker-compose.homolog.yaml' \
+            --exclude='*.homolog.env' \
+            --exclude='docker-compose.yaml' \
+            $DEPLOY_PATH/front $PROMOTE_PATH/front
+
+            rsync -av --exclude='node_modules' --exclude='.git' \
+            $DEPLOY_PATH/back $PROMOTE_PATH/back
 
             cd $PROMOTE_PATH
-            ls -la $PROMOTE_PATH
-
             sudo docker compose -f docker-compose.production.yaml up -d --build
           EOF
