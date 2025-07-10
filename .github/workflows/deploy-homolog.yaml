@@ -60,5 +60,5 @@ jobs:
             git reset --hard origin/$HOMOLOG_BRANCH
             git pull
 
-            sudo docker compose -f docker-compose.homolog.yaml up -d --build
+            sudo  docker compose -f docker-compose.homolog.yaml --project-name tarefas_hml up -d --build
           EOF

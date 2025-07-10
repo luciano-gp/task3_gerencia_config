@@ -1,6 +1,5 @@
 services:
   mongo:
-    container_name: mongo_tarefas_prod
     image: mongo
     ports:
       - "27017:27017"
@@ -10,7 +9,6 @@ services:
       - backend_prod
 
   api:
-    container_name: api_tarefas_prod
     build:
       context: ./back
       dockerfile: Dockerfile
@@ -24,7 +22,6 @@ services:
       - backend_prod
 
   front:
-    container_name: front_tarefas_prod
     build:
       context: ./front
       dockerfile: Dockerfile

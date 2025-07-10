@@ -1,6 +1,5 @@
 services:
   mongo:
-    container_name: mongo_tarefas_homolog
     image: mongo
     ports:
       - "27018:27017"
@@ -10,7 +9,6 @@ services:
       - backend_homolog
 
   api:
-    container_name: api_tarefas_homolog
     build:
       context: ./back
       dockerfile: Dockerfile
@@ -24,7 +22,6 @@ services:
       - backend_homolog
 
   front:
-    container_name: front_tarefas_homolog
     build:
       context: ./front
       dockerfile: Dockerfile
