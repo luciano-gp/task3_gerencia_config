@@ -12,14 +12,7 @@ const seed = async () => {
   const email = 'luciano@email.com';
   const senha = 'admin';
 
-  const count = await Tarefa.countDocuments();
   let usuario = await Usuario.findOne({ email });
-
-  if (count > 0 && usuario) {
-    console.log('Tarefas já existentes. Seed ignorado.');
-    return mongoose.disconnect();
-  }
-
   if (!usuario) {
     const senhaHash = await bcrypt.hash(senha, 10);
     usuario = new Usuario({
@@ -33,9 +26,13 @@ const seed = async () => {
   } else {
     console.log('Usuário já existente:', email);
   }
-
+  
+  const countTarefas = await Tarefa.countDocuments();
+  if (countTarefas > 0 && usuario) {
+    console.log('Tarefas já existentes. Seed ignorado.');
+    return mongoose.disconnect();
+  }
   const agora = Date.now();
-
   const tarefas = [
     {
       titulo: 'Estudar TypeScript',
