@@ -111,9 +111,9 @@ const seed = async () => {
   const collections = await mongoose.connection.db!.listCollections().toArray();
   const nomesDasColecoes = collections.map((c) => c.name);
 
-  if (!nomesDasColecoes.includes('Teste')) {
-    await mongoose.connection.createCollection('Teste');
-    console.log('Coleção "Teste" criada.');
+  if (!nomesDasColecoes.includes('Categoria')) {
+    await mongoose.connection.createCollection('Categoria');
+    console.log('Coleção "Categoria" criada.');
   }
 
   console.log('Seed concluído com sucesso.');
